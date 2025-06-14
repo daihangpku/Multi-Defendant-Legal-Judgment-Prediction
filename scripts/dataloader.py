@@ -4,8 +4,8 @@ from torch.utils.data import DataLoader, Dataset
 from transformers import AutoTokenizer
 
 class LawDataset(Dataset):
-    def __init__(self, path, tokenizer, num_labels, MAX_LEN=512, stage="train"):
-        self.samples = [json.loads(l) for l in open(path, encoding="utf8")]
+    def __init__(self, samples, tokenizer, num_labels, MAX_LEN=512, stage="train"):
+        self.samples = samples
         self.stage   = stage
         self.max_len = MAX_LEN
         self.tokenizer = tokenizer
