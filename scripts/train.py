@@ -74,21 +74,10 @@ def main(args):
 
     train_samples = [all_samples[i] for i in train_indices]
     eval_samples = [all_samples[i] for i in eval_indices]
-    train_dataset = LawDataset(samples=train_samples, 
-                                tokenizer=tokenizer,
-                                num_labels=num_labels,
-                                stage="train")
-    train_dataloader = DataLoader(train_dataset,
-                      batch_size=args.batch_size,
-                      shuffle=True,
-                      num_workers=4)
+    train_dataset = LawDataset(samples=train_samples, tokenizer=tokenizer, num_labels=num_labels, stage="train")
+    train_dataloader = DataLoader(train_dataset,  batch_size=args.batch_size,  shuffle=True, num_workers=4)
     
-    eval_dataset = LawDataset(
-        samples=eval_samples,
-        tokenizer=tokenizer,
-        num_labels=num_labels,
-        stage="eval"
-    )
+    eval_dataset = LawDataset(samples=eval_samples, tokenizer=tokenizer, num_labels=num_labels, stage="eval")
     eval_dataloader = DataLoader(eval_dataset, batch_size=args.batch_size, shuffle=False, num_workers=4)
 
     # dev_dl   = build_dataloader("dev")
