@@ -61,11 +61,9 @@ def main(args):
     train_datapath = f"{args.data_dir}/train_ctx.jsonl"
     article_path = f"{args.data_dir}/articles_clean.json"
     train_dataset = LawDataset(path=train_datapath, 
-                                article_path=article_path,
-                                bm25=bm25,
                                 tokenizer=tokenizer,
                                 num_labels=num_labels,
-                                stage="train"),
+                                stage="train")
     train_dataloader = DataLoader(train_dataset,
                       batch_size=args.batch_size,
                       shuffle=True,
@@ -75,7 +73,7 @@ def main(args):
     # dev_dl   = build_dataloader("dev")
     device   = "cuda" if torch.cuda.is_available() else "cpu"
 
-    model = MultiLabelClassifier().to(device)
+    model = MultiLabelClassifier(backbone=args.backbone, num_labels=num_labels).to(device)
 
     # pos_weight 
     pos_weight = compute_pos_weight(train_dataloader.dataset, num_labels).to(device)
@@ -84,13 +82,13 @@ def main(args):
     optim = torch.optim.AdamW(model.parameters(), lr=args.lr)
     sched = get_linear_schedule_with_warmup(
         optim,
-        num_warmup_steps=int(args.warn_up_ratio * len(train_dataloader) * args.epochs),
+        num_warmup_steps=int(args.warmup_ratio * len(train_dataloader) * args.epochs),
         num_training_steps=len(train_dataloader) * args.epochs,
     )
     print("start training...")
     for num_epoch in range(args.epochs):
         model.train()
-        pbar = tqdm.tqdm(train_dataloader, desc=f"train-{num_epoch}")
+        pbar = tqdm.tqdm(train_dataloader, desc=f"Epoch {num_epoch}")
         epoch_loss = 0
         step = 0
         for batch in pbar:
@@ -120,7 +118,7 @@ if __name__ == "__main__":
     parser.add_argument("--checkpoint_dir", default="checkpoints", help="模型检查点目录")
     parser.add_argument("--backbone", default="hfl/chinese-legal-electra-base-discriminator", help="预训练模型")
     parser.add_argument("--epochs", type=int, default=10, help="训练轮数")
-    parser.add_argument("--batch_size", type=int, default=64, help="批大小")
+    parser.add_argument("--batch_size", type=int, default=8, help="批大小")
     parser.add_argument("--lr", type=float, default=3e-5, help="学习率")
     parser.add_argument("--max_len", type=int, default=512, help="最大序列长度")
     parser.add_argument("--warmup_ratio", type=float, default=0.1, help="学习率预热比例")

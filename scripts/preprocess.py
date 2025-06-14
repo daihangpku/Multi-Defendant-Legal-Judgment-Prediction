@@ -4,7 +4,7 @@ import concurrent.futures
 RAW_DIR = 'data/raw/subtask1'
 OUT_DIR = 'data/processed/subtask1'
 os.makedirs(OUT_DIR, exist_ok=True)
-
+import ipdb
 # ---------- 1. 法条清洗 ----------
 def load_articles():
     art_raw = json.load(open(f'{RAW_DIR}/articles.json', encoding='utf8'))
@@ -48,16 +48,34 @@ def flatten_cases(split, label2id):
                 'fact': fact,
             }
             # 训练 / 验证集才有标签
-            if 'charges' in case:
-                charges = case['charges'][idx]
-                sample['charge_ids'] = [label2id[c] if c in label2id else -1
-                                         for c in charges]
-                missed_cnt.update([c for c in charges if c not in label2id])
+            if 'outcomes' in case:
+                sample['charge_ids'] = []
+                sample['imprisonment'] = []
+                sample['standard_accusation'] = []
+                for item in case['outcomes']:
+                    if item['name'] == name:
+                        #ipdb.set_trace()
+                        for single_charge in item['judgment']:
+                            if single_charge['standard_accusation'] in label2id:
+                                sample['charge_ids'].append(label2id[single_charge['standard_accusation']])
+                                sample['standard_accusation'].append(single_charge['standard_accusation'])
+                                sample['imprisonment'].append(single_charge['imprisonment'])
+                            else:
+                                missed_cnt.update([single_charge['standard_accusation']])
+                        # sample['standard_accusation'] = item['judgment']['standard_accusation']
+                        # sample['imprisonment'] = item['judgment']['imprisonment']
+                        # charges = sample['standard_accusation'].split(';')
+                        # sample['charge_ids'] = [label2id[c] if c in label2id else -1
+                        #                         for c in charges]
+                        # sample['charge_ids'] = sorted(sample['charge_ids'])
+                        # missed_cnt.update([c for c in charges if c not in label2id])
+                        break
+                
             fout.write(json.dumps(sample, ensure_ascii=False)+'\n')
     fout.close()
     if missed_cnt:
         print('[WARN] 未在 charges.json 里找到的罪名及次数：', missed_cnt)
-        
+
 def process_sample(line, bm25, article_dict, top_k):
     import jieba
     s = json.loads(line)
@@ -66,7 +84,7 @@ def process_sample(line, bm25, article_dict, top_k):
     s["ctx"] = "".join(article_dict[aid] for aid in top_ids)
     return s
 
-def add_ctx_to_samples(split, article_token_path, article_clean_path, top_k=5, num_workers=8):
+def add_ctx_to_samples(split, article_token_path, article_clean_path, top_k=3, num_workers=8):
     # 加载BM25
     doc_ids, corpus_tokens = [], []
     for ln in open(article_token_path, encoding="utf8"):

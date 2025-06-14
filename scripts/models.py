@@ -8,7 +8,13 @@ class MultiLabelClassifier(torch.nn.Module):
         self.dropout = torch.nn.Dropout(0.2)
         self.cls     = torch.nn.Linear(self.encoder.config.hidden_size, num_labels)
 
-    def forward(self, input_ids, attention_mask):
-        x = self.encoder(input_ids, attention_mask=attention_mask).pooler_output
+    def forward(self, input_ids, attention_mask, token_type_ids=None):
+        outputs = self.encoder(
+            input_ids=input_ids,
+            attention_mask=attention_mask,
+            token_type_ids=token_type_ids
+        )
+        # 取 [CLS] 向量
+        x = outputs.last_hidden_state[:, 0]
         x = self.dropout(x)
         return self.cls(x)
