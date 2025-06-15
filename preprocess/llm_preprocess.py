@@ -2,6 +2,7 @@ import json, re, os, tqdm, jieba, argparse, collections
 from rank_bm25 import BM25Okapi
 from openai import OpenAI
 import ipdb
+import concurrent.futures
 USER_PROMPT_TMPL = (
     "【案情全文】\n{fact}\n"
     "【被告姓名】\n{defendants}\n"
@@ -15,12 +16,6 @@ USER_PROMPT_TMPL = (
     '{{"defendant":str,"key_facts":str, "key_articles":str}}'
 )
 def return_prompt(fact, defendants, articles):
-    """
-    返回用户提示模板，包含案情和被告名单。
-    :param fact: 案情文本
-    :param defendants: 被告名单
-    :return: 格式化的用户提示字符串
-    """
     return USER_PROMPT_TMPL.format(fact=fact, defendants=defendants, articles=articles)
 def query_llm(client, prompt):
     SYSTEM_PROMPT = (
@@ -35,27 +30,25 @@ def query_llm(client, prompt):
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user", "content": prompt},
     ],
-    # Qwen3模型通过enable_thinking参数控制思考过程（开源版默认True，商业版默认False）
-    # 使用Qwen3开源版模型时，若未启用流式输出，请将下行取消注释，否则会报错
-    # extra_body={"enable_thinking": False},
     )
-    ipdb.set_trace()
-    print(prompt)
-    print(completion.choices[0].message.content.strip())
+    # ipdb.set_trace()
+    # print(prompt)
+    # print(completion.choices[0].message.content.strip())
     result = json.loads(completion.choices[0].message.content.strip())
     # print(len(result["key_facts"]))
     # print(len(result["key_articles"]))
     return result
 
-def llm_preprocess(OUT_DIR, split='train'):
+def llm_preprocess(OUT_DIR, split='train', num_workers=8):
     client = OpenAI(
-    api_key="sk-b9283054aa5b4e089d380647972c9c59",
-    base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+        api_key="sk-b9283054aa5b4e089d380647972c9c59",
+        base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
     ) 
     in_path = f"{OUT_DIR}/{split}_ctx.jsonl"
     out_path = f"{OUT_DIR}/{split}_llm.jsonl"
     with open(in_path, encoding="utf8") as fin, open(out_path, "w", encoding="utf8") as fout:
-        for i, line in enumerate(tqdm.tqdm(fin, desc=f"llm preprocess {split}")):
+        total = sum(1 for _ in open(in_path, encoding="utf8"))
+        for i, line in enumerate(tqdm.tqdm(fin, desc=f"llm preprocess {split}", total=total)):
             sample = json.loads(line)
             prompt = return_prompt(sample["fact"], sample["defendant"], sample["ctx"])
 

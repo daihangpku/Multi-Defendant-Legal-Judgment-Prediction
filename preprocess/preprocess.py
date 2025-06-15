@@ -5,6 +5,7 @@ from openai import OpenAI
 from clean import load_articles, load_charges
 from flatten import flatten_cases, add_ctx_to_samples
 from llm_preprocess import llm_preprocess
+from batch_llm_preprocess import muti_llm_preprocess
 
 # ---------- main ----------
 if __name__ == '__main__':
@@ -33,3 +34,4 @@ if __name__ == '__main__':
         #     top_k=args.top_k,
         # )
         llm_preprocess(OUT_DIR, split=sp.strip())
+        #muti_llm_preprocess(OUT_DIR, split=sp.strip(), num_workers=8)
