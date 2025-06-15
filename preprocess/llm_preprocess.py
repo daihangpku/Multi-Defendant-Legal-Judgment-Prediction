@@ -1,15 +1,13 @@
 import json, re, os, tqdm, jieba, argparse, collections
-from rank_bm25 import BM25Okapi
 from openai import OpenAI
 import ipdb
-import concurrent.futures
 USER_PROMPT_TMPL = (
     "【案情全文】\n{fact}\n"
     "【被告姓名】\n{defendants}\n"
     "【相关法条】\n{articles}\n"
     "---------------------\n"
     "请按照下列要求输出：\n"
-    "1. 列出和被告有关的关键事实，≤300字。\n"
+    "1. 列出和被告有关的有助于定罪的关键事实，≤300字。\n"
     "2. 从给定的相关法条中找出和案情最相关的部分，≤200字。\n"
     "2. 不要复述无关背景；不提及量刑、刑期。\n"
     "3. 用 JSON 数组返回，示例：\n"
