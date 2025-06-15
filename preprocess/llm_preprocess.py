@@ -40,10 +40,11 @@ def query_llm(client, prompt):
     # extra_body={"enable_thinking": False},
     )
     ipdb.set_trace()
+    print(prompt)
     print(completion.choices[0].message.content.strip())
     result = json.loads(completion.choices[0].message.content.strip())
-    print(len(result["key_facts"]))
-    print(len(result["key_articles"]))
+    # print(len(result["key_facts"]))
+    # print(len(result["key_articles"]))
     return result
 
 def llm_preprocess(OUT_DIR, split='train'):
