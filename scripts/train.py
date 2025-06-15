@@ -74,10 +74,10 @@ def main(args):
 
     train_samples = [all_samples[i] for i in train_indices]
     eval_samples = [all_samples[i] for i in eval_indices]
-    train_dataset = LawDataset(samples=train_samples, tokenizer=tokenizer, num_labels=num_labels, stage="train")
+    train_dataset = LawDataset(samples=train_samples, tokenizer=tokenizer, num_labels=num_labels, MAX_LEN=args.max_len, stage="train")
     train_dataloader = DataLoader(train_dataset,  batch_size=args.batch_size,  shuffle=True, num_workers=4)
     
-    eval_dataset = LawDataset(samples=eval_samples, tokenizer=tokenizer, num_labels=num_labels, stage="eval")
+    eval_dataset = LawDataset(samples=eval_samples, tokenizer=tokenizer, num_labels=num_labels, MAX_LEN=args.max_len, stage="eval")
     eval_dataloader = DataLoader(eval_dataset, batch_size=args.batch_size, shuffle=False, num_workers=4)
 
     # dev_dl   = build_dataloader("dev")
@@ -145,13 +145,13 @@ if __name__ == "__main__":
     parser.add_argument("--data_dir", default="data/processed/subtask1", help="数据目录")
     parser.add_argument("--checkpoint_dir", default="checkpoints", help="模型检查点目录")
     parser.add_argument("--backbone", default="hfl/chinese-legal-electra-base-discriminator", help="预训练模型")
-    parser.add_argument("--epochs", type=int, default=10, help="训练轮数")
-    parser.add_argument("--batch_size", type=int, default=16, help="批大小")
+    parser.add_argument("--epochs", type=int, default=100, help="训练轮数")
+    parser.add_argument("--batch_size", type=int, default=8, help="批大小")
     parser.add_argument("--lr", type=float, default=3e-5, help="学习率")
-    parser.add_argument("--max_len", type=int, default=512, help="最大序列长度")
+    parser.add_argument("--max_len", type=int, default=6000, help="最大序列长度")
     parser.add_argument("--warmup_ratio", type=float, default=0.1, help="学习率预热比例")
     parser.add_argument("--top_k_article", type=int, default=5, help="BM25检索的法条数量")
-    parser.add_argument("--save_interval", type=int, default=1, help="保存模型的间隔轮数")
+    parser.add_argument("--save_interval", type=int, default=10, help="保存模型的间隔轮数")
     parser.add_argument("--eval_interval", type=int, default=1, help="评估模型的间隔轮数")
     parser.add_argument("--ckpt_path", type=str, default=None, help="加载的模型检查点路径")
     args = parser.parse_args()
