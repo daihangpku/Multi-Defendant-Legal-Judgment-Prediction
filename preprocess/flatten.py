@@ -7,13 +7,14 @@ def flatten_cases(split, label2id, RAW_DIR, OUT_DIR):
     fout = open(f'{OUT_DIR}/{split}.jsonl', 'w', encoding='utf8')
     missed_cnt = collections.Counter()   # 统计训练中没出现在 charges.json 的罪名
 
-    for line in tqdm.tqdm(fin, desc=f'flatten {split}'):
+    for case_idx, line in enumerate(tqdm.tqdm(fin, desc=f'flatten {split}')):
         case = json.loads(line)
         fact = case['fact']
         for idx, name in enumerate(case['defendants']):
             sample = {
                 'defendant': name,
                 'fact': fact,
+                'case_idx': case_idx,
             }
            
             # 训练 / 验证集才有标签
@@ -24,6 +25,7 @@ def flatten_cases(split, label2id, RAW_DIR, OUT_DIR):
                 for item in case['outcomes']:
                     if item['name'] == name:
                         #ipdb.set_trace()
+                        sample["change_num"] = len(item['judgment'])
                         for single_charge in item['judgment']:
                             if single_charge['standard_accusation'] in label2id:
                                 sample['charge_ids'].append(label2id[single_charge['standard_accusation']])

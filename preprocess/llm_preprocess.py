@@ -10,7 +10,7 @@ USER_PROMPT_TMPL = (
     "【相关法条】\n{articles}\n"
     "---------------------\n"
     "请按照下列要求输出：\n"
-    "1. 列出和被告有关的有助于定罪的关键事实，≤300字。\n"
+    "1. 列出和给定被告有关的有助于定罪的关键事实，≤300字。\n"
     "2. 从给定的相关法条中找出和案情相关的部分，≤200字。\n"
     "2. 不要复述无关背景，不进行定罪，不提及、量刑、刑期。\n"
     "3. 用 JSON 数组返回，示例：\n"
@@ -32,16 +32,12 @@ def query_llm(client, prompt):
         {"role": "user", "content": prompt},
     ],
     )
-    #ipdb.set_trace()
-    # print(prompt)
-    # print(completion.choices[0].message.content.strip())
+
     try:
         print(completion.choices[0].message.content.strip())
         ipdb.set_trace()
         result = json.loads(completion.choices[0].message.content.strip())
         
-        # print(len(result["key_facts"]))
-        # print(len(result["key_articles"]))
     except json.JSONDecodeError as e:
         result = None
         print(f"JSON 解码错误: {e}")
@@ -57,35 +53,45 @@ def query_llm_curl(client, prompt):
         "『判定被告罪名时最关键的事实要点』。"
         "你只输出中文，不解释、不添加法律意见。"
     )
-    # client 参数可以不用了，保留接口兼容
-    url = "https://chat.zju.edu.cn/api/ai/v1/chat/completions"
-    api_key = "sk-Bg08QRNZRTV8QPHsE9Ef4cE91cB64c75Bc89Ca4156902271"  # TODO: 替换为你的实际 API KEY
-               
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {api_key}",
-    }
+
+    url = "http://localhost:11434/api/chat"
+
     data = {
-        "model": "deepseek-v3",
+        "model": "deepseek-r1:14b",
         "messages": [
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": prompt}
-        ],
-        "stream": False
+        ]
     }
-    resp = requests.post(url, headers=headers, json=data, timeout=30)
+    resp = requests.post(url, json=data, timeout=60)
     resp.raise_for_status()
-    result = resp.json()
-    # 假设返回格式和 OpenAI 类似
     
-    content = result["choices"][0]["message"]["content"].strip()
-    match = re.search(r"```json\s*(.*?)\s*```", content, re.DOTALL)
+    contents = []
+    for line in resp.iter_lines(decode_unicode=True):
+        if not line.strip():
+            continue
+        try:
+            obj = json.loads(line)
+            # 只拼接 message.content
+            if "message" in obj and "content" in obj["message"]:
+                contents.append(obj["message"]["content"])
+        except Exception as e:
+            continue
+    #ipdb.set_trace()
+    content = "".join(contents).strip()
+    # 提取 code block 或第一个合法 JSON
+    match = re.search(r"```json\s*([\s\S]*?)```", content)
     if match:
         json_str = match.group(1)
     else:
-        raise ValueError("未找到合法的 JSON 格式输出")
-    #ipdb.set_trace()
-    return json.loads(json_str)
+        match = re.search(r'(\{[\s\S]*?\}|\[[\s\S]*?\])', content)
+        json_str = match.group(1) if match else content
+    try:
+        r = json.loads(json_str)
+        return r
+    except Exception as e:
+        print("解析本地模型输出失败:", e)
+        return None
 
 
 def load_finished_ids(progress_path):
@@ -95,14 +101,10 @@ def load_finished_ids(progress_path):
         return set(int(line.strip()) for line in f if line.strip().isdigit())
 
 
-def llm_preprocess(OUT_DIR, split='train', num_workers=4):
-    # client = OpenAI(
-    #     api_key="sk-b9283054aa5b4e089d380647972c9c59",
-    #     base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
-    #)
+def llm_preprocess(OUT_DIR, split='train', num_workers=8):
     client = OpenAI(
-        api_key="sk-dqQbYclybFE7Lb31Bv31KQLrLnmXtQP7Dr78fzHyf1rQ9fGM",  # 混元 APIKey
-        base_url="https://api.hunyuan.cloud.tencent.com/v1",  # 混元 endpoint
+        api_key="sk-b9283054aa5b4e089d380647972c9c59", 
+        base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
     )
 
     in_path = f"{OUT_DIR}/{split}_ctx.jsonl"
@@ -122,18 +124,23 @@ def llm_preprocess(OUT_DIR, split='train', num_workers=4):
 
     def process_and_write(args):
         client, sample, idx = args
-        max_retries = 100
+        max_retries = 5
         for attempt in range(max_retries):
             try:
                 prompt = return_prompt(sample["fact"], sample["defendant"], sample["ctx"])
-                result = query_llm(client, prompt)
+                result = query_llm_curl(client, prompt)
                 if result is None:
                     sample["key_facts"] = sample["fact"][:300] 
                     sample["key_articles"] = sample["ctx"][:200] 
                 elif isinstance(result, list) and len(result) > 0 and "key_facts" in result[0]:
-                    sample["key_facts"] = result[0]["key_facts"]
-                    if "key_articles" in result[0]:
-                        sample["key_articles"] = result[0]["key_articles"]
+                    for item in result:
+                        if item["defendant"] == sample["defendant"]:
+                            sample["key_facts"] = result[0]["key_facts"]
+                            print(len(sample["key_facts"]))
+                            print(f"key_facts: {sample['key_facts']}")
+                            if "key_articles" in result[0]:
+                                sample["key_articles"] = result[0]["key_articles"]
+                            break
                 elif isinstance(result, dict) and "key_facts" in result:
                     sample["key_facts"] = result["key_facts"]
                     if "key_articles" in result:
@@ -161,8 +168,7 @@ def llm_preprocess(OUT_DIR, split='train', num_workers=4):
             list(tqdm.tqdm(executor.map(process_and_write, tasks), total=len(tasks), desc=f"llm preprocess {split}"))
     except KeyboardInterrupt:
         print("\n检测到 Ctrl+C，等待所有写入操作完成后安全退出...")
-        # 这里不需要手动释放 lock，Python 会自动处理
-        # 可以做一些清理或日志
+
         with lock:
             print("清理完成，安全退出。")
             raise

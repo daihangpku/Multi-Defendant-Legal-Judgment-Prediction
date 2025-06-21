@@ -7,10 +7,10 @@ class MultiLabelClassifier(torch.nn.Module):
         self.encoder = AutoModel.from_pretrained(backbone)
         self.dropout = torch.nn.Dropout(0.2)
         self.mlp = torch.nn.Sequential(
-            torch.nn.Linear(self.encoder.config.hidden_size, 512),
-            torch.nn.ReLU(),
-            torch.nn.Dropout(0.2),
-            torch.nn.Linear(512, num_labels)
+            torch.nn.Linear(self.encoder.config.hidden_size, num_labels),
+            # torch.nn.ReLU(),
+            # torch.nn.Dropout(0.2),
+            # torch.nn.Linear(512, num_labels)
         )
         self._init_weights()
 
