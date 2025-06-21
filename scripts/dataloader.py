@@ -18,7 +18,7 @@ class LawDataset(Dataset):
             s for s in self.samples
             if isinstance(s["key_facts"], str) and isinstance(s["key_articles"], str)
         ]
-        if stage=="test":
+        if stage=="test" or stage=="eval":
             print("loading test dataset, total samples:", len(self.samples))
             self.samples.sort(key=lambda x: x["idx"])
     def __len__(self):
