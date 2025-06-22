@@ -6,7 +6,7 @@ from llm_preprocess import llm_preprocess
 # ---------- main ----------
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--splits', default='test')
+    parser.add_argument('--splits', default='train,test')
     parser.add_argument('--raw_dir', default='data/raw/subtask1', help='原始数据目录')
     parser.add_argument('--out_dir', default='data/processed/subtask1', help='处理后数据目录')
     parser.add_argument('--top_k', type=int, default=5, help='BM25检索的法条数量')
@@ -16,7 +16,7 @@ if __name__ == '__main__':
     os.makedirs(OUT_DIR, exist_ok=True)
     # 预处理文章和法条
     print("Loading articles and charges...")
-    # arts = load_articles(RAW_DIR=RAW_DIR, OUT_DIR=OUT_DIR)
+    arts = load_articles(RAW_DIR=RAW_DIR, OUT_DIR=OUT_DIR)
     label2id = load_charges(RAW_DIR=RAW_DIR, OUT_DIR=OUT_DIR)
 
 
