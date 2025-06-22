@@ -1,6 +1,4 @@
-import json, re, os, tqdm, jieba, argparse, collections
-from rank_bm25 import BM25Okapi
-import concurrent.futures
+import json, re, jieba
 def load_articles(RAW_DIR, OUT_DIR):
     art_raw = json.load(open(f'{RAW_DIR}/articles.json', encoding='utf8'))
     art_clean = {}

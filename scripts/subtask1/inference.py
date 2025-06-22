@@ -91,14 +91,15 @@ def inference(args, model, dev_dl, device, epoch, writer=None):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--data_dir", default="data/processed/subtask1/", help="数据目录")
-    parser.add_argument("--backbone", default="hfl/chinese-legal-electra-base-discriminator", help="预训练模型")
+    parser.add_argument("--backbone", default="google-bert/bert-base-chinese", help="预训练模型")
     parser.add_argument("--batch_size", type=int, default=1, help="批大小")
     parser.add_argument("--max_len", type=int, default=512, help="最大序列长度")
     parser.add_argument("--ckpt_path", type=str, required=True, help="加载的模型检查点路径")
-    parser.add_argument("--save_dir", type=str, default="checkpoints", help="模型检查点目录")
+    parser.add_argument("--save_dir", type=str, default=None, help="模型检查点目录")
     args = parser.parse_args()
     os.makedirs(args.save_dir, exist_ok=True)
-
+    if args.save_dir is None:
+        args.save_dir = os.path.dirname(args.ckpt_path)
     # 加载tokenizer和数据
     tokenizer  = AutoTokenizer.from_pretrained(args.backbone)
     label2id   = json.load(open(f"{args.data_dir}/label2id.json"))
@@ -119,6 +120,4 @@ if __name__ == "__main__":
     checkpoint = torch.load(args.ckpt_path, map_location=device)
     model.load_state_dict(checkpoint['model_state_dict'])
 
-    # 只做评估
-    # writer = SummaryWriter(log_dir=os.path.join(args.checkpoint_dir, "logs"))
     inference(args, model, eval_dataloader, device, epoch=0, )

@@ -1,7 +1,4 @@
-import json, re, os, tqdm, jieba, argparse, collections
-from rank_bm25 import BM25Okapi
-import concurrent.futures
-from openai import OpenAI
+import os, argparse
 from clean import load_articles, load_charges
 from flatten import flatten_cases, add_ctx_to_samples
 from llm_preprocess import llm_preprocess

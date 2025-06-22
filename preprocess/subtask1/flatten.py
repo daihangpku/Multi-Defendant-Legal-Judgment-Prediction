@@ -1,4 +1,4 @@
-import json, re, os, tqdm, jieba, argparse, collections
+import json, tqdm, collections
 from rank_bm25 import BM25Okapi
 import concurrent.futures
 
