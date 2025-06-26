@@ -10,29 +10,38 @@ from models import RegressionModel
 from torch.utils.tensorboard import SummaryWriter
 import ipdb
 import csv
-
+def closest_imprisonment(value, imprisonment_list):
+    # 返回imprisonment_list中与value最近的值
+    return min(imprisonment_list, key=lambda x: abs(x - value))
 def inference(args, model, dev_dl, device, epoch, writer=None):
+    imprisonment_gt_001 = [0, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 24, 30, 36, 42, 48, 60]
     model.eval()
-    all_preds = []
-    all_case_idx = []
+    caseid2preds = {}
     with torch.no_grad():
         for batch in tqdm.tqdm(dev_dl, desc=f"Inference"):
             idx = batch.pop("idx", None)
             charge_num = batch.pop("charge_num", None)
-            case_idx = batch.pop("case_idx", None)  
+            case_idx = batch.pop("case_idx", None)
             batch = {k: v.to(device) for k, v in batch.items()}
             preds = model(**batch)
-            preds = preds.cpu().numpy()
-            all_preds.extend(preds.tolist())
-            if case_idx is not None:
-                all_case_idx.extend(case_idx.numpy().tolist())
+            preds = preds.cpu().numpy().tolist()
+            # 支持 batch_size > 1
+            for i, pred in enumerate(preds):
+                case_id = int(case_idx[i].item()) if case_idx is not None else int(idx[i].item())
+                if case_id not in caseid2preds:
+                    caseid2preds[case_id] = []
+                # 每个被告一个 [刑期]，四舍五入为整数
+
+                pred_int = int(round(pred))
+                closest = closest_imprisonment(pred_int, imprisonment_gt_001)
+                caseid2preds[case_id].append([closest])
     # 保存预测结果
     csv_path = os.path.join(args.save_dir, "predictions_imprisonment.csv")
     with open(csv_path, "w", encoding="utf8", newline="") as f:
         f.write("id,imprisonment\n")
-        for idx, pred in zip(all_case_idx, all_preds):
-            # 输出为整数
-            f.write(f"{idx},{max(int(round(pred), 0))}\n")
+        for case_id in sorted(caseid2preds.keys()):
+            imprisonment_str = json.dumps(caseid2preds[case_id], ensure_ascii=False)
+            f.write(f"{case_id+1},\"{imprisonment_str}\"\n")
 
 
 

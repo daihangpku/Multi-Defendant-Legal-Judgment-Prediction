@@ -97,10 +97,11 @@ if __name__ == "__main__":
     parser.add_argument("--ckpt_path", type=str, required=True, help="加载的模型检查点路径")
     parser.add_argument("--save_dir", type=str, default=None, help="模型检查点目录")
     args = parser.parse_args()
-    os.makedirs(args.save_dir, exist_ok=True)
+    
     if args.save_dir is None:
         args.save_dir = os.path.dirname(args.ckpt_path)
-    # 加载tokenizer和数据
+
+    os.makedirs(args.save_dir, exist_ok=True)
     tokenizer  = AutoTokenizer.from_pretrained(args.backbone)
     label2id   = json.load(open(f"{args.data_dir}/label2id.json"))
     num_labels = len(label2id)

@@ -1,0 +1,707 @@
+[
+  {
+    "imprisonment": 0,
+    "count": 4744,
+    "ratio": 0.15228067922832472
+  },
+  {
+    "imprisonment": 1,
+    "count": 2,
+    "ratio": 6.419927454819761e-05
+  },
+  {
+    "imprisonment": 2,
+    "count": 3,
+    "ratio": 9.629891182229641e-05
+  },
+  {
+    "imprisonment": 3,
+    "count": 3,
+    "ratio": 9.629891182229641e-05
+  },
+  {
+    "imprisonment": 4,
+    "count": 2,
+    "ratio": 6.419927454819761e-05
+  },
+  {
+    "imprisonment": 6,
+    "count": 2560,
+    "ratio": 0.08217507142169293
+  },
+  {
+    "imprisonment": 7,
+    "count": 1755,
+    "ratio": 0.0563348634160434
+  },
+  {
+    "imprisonment": 8,
+    "count": 1996,
+    "ratio": 0.0640708759991012
+  },
+  {
+    "imprisonment": 9,
+    "count": 1253,
+    "ratio": 0.0402208455044458
+  },
+  {
+    "imprisonment": 10,
+    "count": 1764,
+    "ratio": 0.056623760151510286
+  },
+  {
+    "imprisonment": 11,
+    "count": 585,
+    "ratio": 0.0187782878053478
+  },
+  {
+    "imprisonment": 12,
+    "count": 2909,
+    "ratio": 0.09337784483035341
+  },
+  {
+    "imprisonment": 13,
+    "count": 314,
+    "ratio": 0.010079286104067024
+  },
+  {
+    "imprisonment": 14,
+    "count": 829,
+    "ratio": 0.026610599300227907
+  },
+  {
+    "imprisonment": 15,
+    "count": 668,
+    "ratio": 0.021442557699098
+  },
+  {
+    "imprisonment": 16,
+    "count": 407,
+    "ratio": 0.013064552370558213
+  },
+  {
+    "imprisonment": 17,
+    "count": 220,
+    "ratio": 0.007061920200301736
+  },
+  {
+    "imprisonment": 18,
+    "count": 1554,
+    "ratio": 0.04988283632394954
+  },
+  {
+    "imprisonment": 19,
+    "count": 145,
+    "ratio": 0.0046544474047443265
+  },
+  {
+    "imprisonment": 20,
+    "count": 335,
+    "ratio": 0.010753378486823098
+  },
+  {
+    "imprisonment": 21,
+    "count": 214,
+    "ratio": 0.006869322376657144
+  },
+  {
+    "imprisonment": 22,
+    "count": 292,
+    "ratio": 0.00937309408403685
+  },
+  {
+    "imprisonment": 23,
+    "count": 36,
+    "ratio": 0.001155586941867557
+  },
+  {
+    "imprisonment": 24,
+    "count": 1197,
+    "ratio": 0.038423265817096264
+  },
+  {
+    "imprisonment": 25,
+    "count": 38,
+    "ratio": 0.0012197862164157545
+  },
+  {
+    "imprisonment": 26,
+    "count": 115,
+    "ratio": 0.0036914582865213625
+  },
+  {
+    "imprisonment": 27,
+    "count": 181,
+    "ratio": 0.005810034346611884
+  },
+  {
+    "imprisonment": 28,
+    "count": 116,
+    "ratio": 0.0037235579237954613
+  },
+  {
+    "imprisonment": 29,
+    "count": 52,
+    "ratio": 0.0016691811382531377
+  },
+  {
+    "imprisonment": 30,
+    "count": 548,
+    "ratio": 0.017590601226206145
+  },
+  {
+    "imprisonment": 31,
+    "count": 30,
+    "ratio": 0.0009629891182229641
+  },
+  {
+    "imprisonment": 32,
+    "count": 69,
+    "ratio": 0.0022148749719128175
+  },
+  {
+    "imprisonment": 33,
+    "count": 57,
+    "ratio": 0.0018296793246236316
+  },
+  {
+    "imprisonment": 34,
+    "count": 82,
+    "ratio": 0.0026321702564761017
+  },
+  {
+    "imprisonment": 35,
+    "count": 7,
+    "ratio": 0.0002246974609186916
+  },
+  {
+    "imprisonment": 36,
+    "count": 2094,
+    "ratio": 0.06721664045196289
+  },
+  {
+    "imprisonment": 37,
+    "count": 43,
+    "ratio": 0.0013802844027862484
+  },
+  {
+    "imprisonment": 38,
+    "count": 124,
+    "ratio": 0.003980355021988251
+  },
+  {
+    "imprisonment": 39,
+    "count": 170,
+    "ratio": 0.005456938336596796
+  },
+  {
+    "imprisonment": 40,
+    "count": 69,
+    "ratio": 0.0022148749719128175
+  },
+  {
+    "imprisonment": 41,
+    "count": 31,
+    "ratio": 0.0009950887554970628
+  },
+  {
+    "imprisonment": 42,
+    "count": 464,
+    "ratio": 0.014894231695181845
+  },
+  {
+    "imprisonment": 43,
+    "count": 34,
+    "ratio": 0.0010913876673193594
+  },
+  {
+    "imprisonment": 44,
+    "count": 70,
+    "ratio": 0.0022469746091869163
+  },
+  {
+    "imprisonment": 45,
+    "count": 80,
+    "ratio": 0.002567970981927904
+  },
+  {
+    "imprisonment": 46,
+    "count": 62,
+    "ratio": 0.0019901775109941256
+  },
+  {
+    "imprisonment": 47,
+    "count": 7,
+    "ratio": 0.0002246974609186916
+  },
+  {
+    "imprisonment": 48,
+    "count": 409,
+    "ratio": 0.01312875164510641
+  },
+  {
+    "imprisonment": 49,
+    "count": 8,
+    "ratio": 0.00025679709819279045
+  },
+  {
+    "imprisonment": 50,
+    "count": 32,
+    "ratio": 0.0010271883927711618
+  },
+  {
+    "imprisonment": 51,
+    "count": 59,
+    "ratio": 0.0018938785991718294
+  },
+  {
+    "imprisonment": 52,
+    "count": 11,
+    "ratio": 0.0003530960100150868
+  },
+  {
+    "imprisonment": 53,
+    "count": 10,
+    "ratio": 0.000320996372740988
+  },
+  {
+    "imprisonment": 54,
+    "count": 189,
+    "ratio": 0.006066831444804674
+  },
+  {
+    "imprisonment": 55,
+    "count": 10,
+    "ratio": 0.000320996372740988
+  },
+  {
+    "imprisonment": 56,
+    "count": 17,
+    "ratio": 0.0005456938336596797
+  },
+  {
+    "imprisonment": 57,
+    "count": 15,
+    "ratio": 0.00048149455911148206
+  },
+  {
+    "imprisonment": 58,
+    "count": 17,
+    "ratio": 0.0005456938336596797
+  },
+  {
+    "imprisonment": 59,
+    "count": 2,
+    "ratio": 6.419927454819761e-05
+  },
+  {
+    "imprisonment": 60,
+    "count": 343,
+    "ratio": 0.011010175585015889
+  },
+  {
+    "imprisonment": 61,
+    "count": 4,
+    "ratio": 0.00012839854909639522
+  },
+  {
+    "imprisonment": 62,
+    "count": 29,
+    "ratio": 0.0009308894809488653
+  },
+  {
+    "imprisonment": 63,
+    "count": 35,
+    "ratio": 0.0011234873045934581
+  },
+  {
+    "imprisonment": 64,
+    "count": 9,
+    "ratio": 0.00028889673546688923
+  },
+  {
+    "imprisonment": 65,
+    "count": 12,
+    "ratio": 0.00038519564728918564
+  },
+  {
+    "imprisonment": 66,
+    "count": 142,
+    "ratio": 0.00455814849292203
+  },
+  {
+    "imprisonment": 67,
+    "count": 3,
+    "ratio": 9.629891182229641e-05
+  },
+  {
+    "imprisonment": 68,
+    "count": 11,
+    "ratio": 0.0003530960100150868
+  },
+  {
+    "imprisonment": 69,
+    "count": 15,
+    "ratio": 0.00048149455911148206
+  },
+  {
+    "imprisonment": 70,
+    "count": 8,
+    "ratio": 0.00025679709819279045
+  },
+  {
+    "imprisonment": 71,
+    "count": 1,
+    "ratio": 3.2099637274098806e-05
+  },
+  {
+    "imprisonment": 72,
+    "count": 164,
+    "ratio": 0.0052643405129522034
+  },
+  {
+    "imprisonment": 73,
+    "count": 2,
+    "ratio": 6.419927454819761e-05
+  },
+  {
+    "imprisonment": 74,
+    "count": 5,
+    "ratio": 0.000160498186370494
+  },
+  {
+    "imprisonment": 75,
+    "count": 6,
+    "ratio": 0.00019259782364459282
+  },
+  {
+    "imprisonment": 76,
+    "count": 7,
+    "ratio": 0.0002246974609186916
+  },
+  {
+    "imprisonment": 77,
+    "count": 3,
+    "ratio": 9.629891182229641e-05
+  },
+  {
+    "imprisonment": 78,
+    "count": 58,
+    "ratio": 0.0018617789618977307
+  },
+  {
+    "imprisonment": 79,
+    "count": 2,
+    "ratio": 6.419927454819761e-05
+  },
+  {
+    "imprisonment": 80,
+    "count": 10,
+    "ratio": 0.000320996372740988
+  },
+  {
+    "imprisonment": 81,
+    "count": 1,
+    "ratio": 3.2099637274098806e-05
+  },
+  {
+    "imprisonment": 82,
+    "count": 5,
+    "ratio": 0.000160498186370494
+  },
+  {
+    "imprisonment": 84,
+    "count": 159,
+    "ratio": 0.0051038423265817095
+  },
+  {
+    "imprisonment": 86,
+    "count": 11,
+    "ratio": 0.0003530960100150868
+  },
+  {
+    "imprisonment": 87,
+    "count": 13,
+    "ratio": 0.00041729528456328443
+  },
+  {
+    "imprisonment": 88,
+    "count": 4,
+    "ratio": 0.00012839854909639522
+  },
+  {
+    "imprisonment": 89,
+    "count": 1,
+    "ratio": 3.2099637274098806e-05
+  },
+  {
+    "imprisonment": 90,
+    "count": 45,
+    "ratio": 0.0014444836773344462
+  },
+  {
+    "imprisonment": 91,
+    "count": 3,
+    "ratio": 9.629891182229641e-05
+  },
+  {
+    "imprisonment": 92,
+    "count": 5,
+    "ratio": 0.000160498186370494
+  },
+  {
+    "imprisonment": 93,
+    "count": 1,
+    "ratio": 3.2099637274098806e-05
+  },
+  {
+    "imprisonment": 94,
+    "count": 3,
+    "ratio": 9.629891182229641e-05
+  },
+  {
+    "imprisonment": 95,
+    "count": 1,
+    "ratio": 3.2099637274098806e-05
+  },
+  {
+    "imprisonment": 96,
+    "count": 88,
+    "ratio": 0.0028247680801206944
+  },
+  {
+    "imprisonment": 98,
+    "count": 4,
+    "ratio": 0.00012839854909639522
+  },
+  {
+    "imprisonment": 99,
+    "count": 3,
+    "ratio": 9.629891182229641e-05
+  },
+  {
+    "imprisonment": 100,
+    "count": 3,
+    "ratio": 9.629891182229641e-05
+  },
+  {
+    "imprisonment": 102,
+    "count": 20,
+    "ratio": 0.000641992745481976
+  },
+  {
+    "imprisonment": 104,
+    "count": 3,
+    "ratio": 9.629891182229641e-05
+  },
+  {
+    "imprisonment": 105,
+    "count": 2,
+    "ratio": 6.419927454819761e-05
+  },
+  {
+    "imprisonment": 106,
+    "count": 3,
+    "ratio": 9.629891182229641e-05
+  },
+  {
+    "imprisonment": 108,
+    "count": 43,
+    "ratio": 0.0013802844027862484
+  },
+  {
+    "imprisonment": 109,
+    "count": 1,
+    "ratio": 3.2099637274098806e-05
+  },
+  {
+    "imprisonment": 110,
+    "count": 2,
+    "ratio": 6.419927454819761e-05
+  },
+  {
+    "imprisonment": 111,
+    "count": 4,
+    "ratio": 0.00012839854909639522
+  },
+  {
+    "imprisonment": 112,
+    "count": 4,
+    "ratio": 0.00012839854909639522
+  },
+  {
+    "imprisonment": 114,
+    "count": 6,
+    "ratio": 0.00019259782364459282
+  },
+  {
+    "imprisonment": 116,
+    "count": 1,
+    "ratio": 3.2099637274098806e-05
+  },
+  {
+    "imprisonment": 118,
+    "count": 3,
+    "ratio": 9.629891182229641e-05
+  },
+  {
+    "imprisonment": 120,
+    "count": 149,
+    "ratio": 0.004782845953840722
+  },
+  {
+    "imprisonment": 122,
+    "count": 6,
+    "ratio": 0.00019259782364459282
+  },
+  {
+    "imprisonment": 123,
+    "count": 12,
+    "ratio": 0.00038519564728918564
+  },
+  {
+    "imprisonment": 124,
+    "count": 4,
+    "ratio": 0.00012839854909639522
+  },
+  {
+    "imprisonment": 125,
+    "count": 2,
+    "ratio": 6.419927454819761e-05
+  },
+  {
+    "imprisonment": 126,
+    "count": 49,
+    "ratio": 0.0015728822264308414
+  },
+  {
+    "imprisonment": 127,
+    "count": 2,
+    "ratio": 6.419927454819761e-05
+  },
+  {
+    "imprisonment": 128,
+    "count": 4,
+    "ratio": 0.00012839854909639522
+  },
+  {
+    "imprisonment": 129,
+    "count": 3,
+    "ratio": 9.629891182229641e-05
+  },
+  {
+    "imprisonment": 130,
+    "count": 1,
+    "ratio": 3.2099637274098806e-05
+  },
+  {
+    "imprisonment": 132,
+    "count": 105,
+    "ratio": 0.0033704619137803742
+  },
+  {
+    "imprisonment": 135,
+    "count": 2,
+    "ratio": 6.419927454819761e-05
+  },
+  {
+    "imprisonment": 137,
+    "count": 3,
+    "ratio": 9.629891182229641e-05
+  },
+  {
+    "imprisonment": 138,
+    "count": 32,
+    "ratio": 0.0010271883927711618
+  },
+  {
+    "imprisonment": 140,
+    "count": 1,
+    "ratio": 3.2099637274098806e-05
+  },
+  {
+    "imprisonment": 141,
+    "count": 3,
+    "ratio": 9.629891182229641e-05
+  },
+  {
+    "imprisonment": 144,
+    "count": 76,
+    "ratio": 0.002439572432831509
+  },
+  {
+    "imprisonment": 150,
+    "count": 16,
+    "ratio": 0.0005135941963855809
+  },
+  {
+    "imprisonment": 152,
+    "count": 1,
+    "ratio": 3.2099637274098806e-05
+  },
+  {
+    "imprisonment": 153,
+    "count": 1,
+    "ratio": 3.2099637274098806e-05
+  },
+  {
+    "imprisonment": 155,
+    "count": 1,
+    "ratio": 3.2099637274098806e-05
+  },
+  {
+    "imprisonment": 156,
+    "count": 46,
+    "ratio": 0.001476583314608545
+  },
+  {
+    "imprisonment": 159,
+    "count": 1,
+    "ratio": 3.2099637274098806e-05
+  },
+  {
+    "imprisonment": 162,
+    "count": 7,
+    "ratio": 0.0002246974609186916
+  },
+  {
+    "imprisonment": 166,
+    "count": 1,
+    "ratio": 3.2099637274098806e-05
+  },
+  {
+    "imprisonment": 168,
+    "count": 25,
+    "ratio": 0.0008024909318524701
+  },
+  {
+    "imprisonment": 169,
+    "count": 1,
+    "ratio": 3.2099637274098806e-05
+  },
+  {
+    "imprisonment": 170,
+    "count": 1,
+    "ratio": 3.2099637274098806e-05
+  },
+  {
+    "imprisonment": 171,
+    "count": 1,
+    "ratio": 3.2099637274098806e-05
+  },
+  {
+    "imprisonment": 172,
+    "count": 1,
+    "ratio": 3.2099637274098806e-05
+  },
+  {
+    "imprisonment": 174,
+    "count": 4,
+    "ratio": 0.00012839854909639522
+  },
+  {
+    "imprisonment": 180,
+    "count": 172,
+    "ratio": 0.005521137611144994
+  }
+]

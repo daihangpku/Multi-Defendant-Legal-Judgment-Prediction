@@ -4,11 +4,12 @@ from torch.utils.data import DataLoader, Dataset
 from transformers import AutoTokenizer
 
 class LawDataset(Dataset):
-    def __init__(self, samples, tokenizer, MAX_LEN=512, stage="train"):
+    def __init__(self, samples, tokenizer, num_labels, MAX_LEN=512, stage="train"):
         self.samples = samples
         self.stage   = stage
         self.max_len = MAX_LEN
         self.tokenizer = tokenizer
+        self.NUM_LABELS = num_labels
         # Filter samples to only include those with all required keys
         required_keys = {'defendant', 'fact', 'charge_ids', 'imprisonment', 'standard_accusation', 'ctx', 'key_facts', 'key_articles', 'idx'}
         self.samples = [s for s in self.samples if required_keys.issubset(s.keys())]
@@ -17,8 +18,8 @@ class LawDataset(Dataset):
             s for s in self.samples
             if isinstance(s["key_facts"], str) and isinstance(s["key_articles"], str)
         ]
-        if stage=="test" or stage=="infer":
-            print("loading test dataset, total samples:", len(self.samples))
+        print(f"loading {stage} dataset, total samples:", len(self.samples))
+        if stage=="test":
             self.samples.sort(key=lambda x: x["idx"])
     def __len__(self):
         return len(self.samples)
@@ -37,24 +38,15 @@ class LawDataset(Dataset):
         )
         item = {k: v.squeeze(0) for k, v in enc.items()}
 
-        if self.stage != "infer" :
-            imprisonment = s.get("imprisonment", [[0]])
-            # 统一转为 list[list]
-            if isinstance(imprisonment, int) or isinstance(imprisonment, float):
-                label = float(imprisonment)
-            elif isinstance(imprisonment, list):
-                # [9] 或 [[9]]
-                if len(imprisonment) > 0 and isinstance(imprisonment[0], list):
-                    # [[9]]
-                    label = float(imprisonment[0][0]) if len(imprisonment[0]) > 0 else 0.0
-                elif len(imprisonment) > 0:
-                    # [9]
-                    label = float(imprisonment[0])
-                else:
-                    label = 0.0
+        if self.stage != "infer":
+            y = torch.zeros(self.NUM_LABELS)
+            for cid in s.get("imprisonment_labels", []):
+                if cid >= 0:
+                    y[cid] = 1
+            if self.stage == "train":
+                item["labels"] = y / y.sum() if y.sum() > 0 else y  # Normalize to avoid division by zero
             else:
-                label = 0.0
-            item["labels"] = torch.tensor(label, dtype=torch.float32)
+                item["labels"] = y 
         if "change_num" in s:
             item["charge_num"] = s["change_num"]
         if "case_idx" in s:

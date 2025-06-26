@@ -43,7 +43,10 @@ class LawDataset(Dataset):
             for cid in s.get("charge_ids", []):
                 if cid >= 0:
                     y[cid] = 1
-            item["labels"] = y
+            if self.stage == "train":
+                item["labels"] = y / y.sum() if y.sum() > 0 else y  # Normalize to avoid division by zero
+            else:
+                item["labels"] = y 
         if "change_num" in s:
             item["charge_num"] = s["change_num"]
         if "case_idx" in s:
