@@ -18,7 +18,9 @@ https://disk.pku.edu.cn/link/AAECF2C690C356451898F82534291EBBEE
 and put it as ./data
 
 You can download the ckpt from 
-
+https://disk.pku.edu.cn/link/AAAB0E9392B605451E9BCAF880F241152F
+文件夹名：checkpoints
+有效期限：2025-07-28 20:40
 and put it as ./checkpoints
 ### Subtask1
 For data preprocessing
