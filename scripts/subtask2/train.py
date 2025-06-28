@@ -26,6 +26,8 @@ def evaluate(args, model, dev_dl, device, epoch, writer=None):
     with torch.no_grad():
         for batch in tqdm.tqdm(dev_dl, desc=f"Eval epoch {epoch}"):
             labels = batch.pop("labels").to(device)
+            charge_num = batch.pop("charge_num")
+            case_idx = batch.pop("case_idx", None)
             batch  = {k: v.to(device) for k, v in batch.items()}
             logits = torch.sigmoid(model(**batch))
             all_logits.append(logits.cpu())
@@ -110,6 +112,8 @@ def main(args):
         step = 0
         for batch in pbar:
             labels = batch.pop("labels").to(device)
+            charge_num = batch.pop("charge_num")
+            case_idx = batch.pop("case_idx", None)
             batch  = {k: v.to(device) for k, v in batch.items()}
 
             logits = model(**batch)
@@ -142,8 +146,8 @@ def main(args):
 
 IMPRISONMENT_LABELS = [0, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 24, 27, 30, 36, 39, 42, 48, 54, 60, 72, 84, 180]
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser("train subtask1 model")
-    parser.add_argument("--data_dir", default="data/processed/subtask1", help="数据目录")
+    parser = argparse.ArgumentParser("train subtask2 model")
+    parser.add_argument("--data_dir", default="data/processed/subtask2", help="数据目录")
     parser.add_argument("--save_dir", default="checkpoints", help="模型检查点目录")
     parser.add_argument("--backbone", default="google-bert/bert-base-chinese", help="预训练模型")
     parser.add_argument("--epochs", type=int, default=100, help="训练轮数")
@@ -157,6 +161,6 @@ if __name__ == "__main__":
     parser.add_argument("--labels", type=list, default=IMPRISONMENT_LABELS, help="标签列表")
     args = parser.parse_args()
     timestamp = time.strftime("%Y%m%d_%H%M%S")
-    args.save_dir = os.path.join(args.save_dir, f"subtask1_{timestamp}")
+    args.save_dir = os.path.join(args.save_dir, f"subtask2_{timestamp}")
     os.makedirs(args.save_dir, exist_ok=True)
     main(args)

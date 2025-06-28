@@ -54,7 +54,7 @@ def query_llm_curl(client, prompt):
         "你只输出中文，不解释、不添加法律意见。"
     )
 
-    url = "http://localhost:11435/api/chat"
+    url = "http://localhost:11434/api/chat"
 
     data = {
         "model": "deepseek-r1:14b",
@@ -63,7 +63,7 @@ def query_llm_curl(client, prompt):
             {"role": "user", "content": prompt}
         ]
     }
-    resp = requests.post(url, json=data, timeout=60)
+    resp = requests.post(url, json=data, timeout=300)
     resp.raise_for_status()
     
     contents = []
@@ -86,6 +86,7 @@ def query_llm_curl(client, prompt):
     else:
         match = re.search(r'(\{[\s\S]*?\}|\[[\s\S]*?\])', content)
         json_str = match.group(1) if match else content
+    #print("json_str:", json_str)
     try:
         r = json.loads(json_str)
         return r

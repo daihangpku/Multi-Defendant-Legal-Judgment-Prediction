@@ -24,6 +24,8 @@ def evaluate(args, model, dev_dl, device, epoch, writer=None):
     all_logits, all_labels = [], []
     with torch.no_grad():
         for batch in tqdm.tqdm(dev_dl, desc=f"Eval epoch {epoch}"):
+            charge_num = batch.pop("charge_num", None)
+            case_idx = batch.pop("case_idx", None)
             labels = batch.pop("labels").to(device)
             batch  = {k: v.to(device) for k, v in batch.items()}
             logits = torch.sigmoid(model(**batch))
@@ -100,6 +102,8 @@ def main(args):
         epoch_loss = 0
         step = 0
         for batch in pbar:
+            charge_num = batch.pop("charge_num", None)
+            case_idx = batch.pop("case_idx", None)
             labels = batch.pop("labels").to(device)
             batch  = {k: v.to(device) for k, v in batch.items()}
 

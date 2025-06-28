@@ -12,14 +12,21 @@ class LawDataset(Dataset):
         self.NUM_LABELS = num_labels
         # Filter samples to only include those with all required keys
         required_keys = {'defendant', 'fact', 'charge_ids', 'imprisonment', 'standard_accusation', 'ctx', 'key_facts', 'key_articles', 'idx'}
-        self.samples = [s for s in self.samples if required_keys.issubset(s.keys())]
-        # Remove samples where 'key_facts' or 'key_articles' are not strings
-        self.samples = [
-            s for s in self.samples
-            if isinstance(s["key_facts"], str) and isinstance(s["key_articles"], str)
-        ]
+        missing_samples = []
+        filtered_samples = []
+        for s in self.samples:
+            if not required_keys.issubset(s.keys()):
+                if stage == "infer":
+                    print(f"[infer] idx={s.get('idx', 'N/A')} 缺少字段: {required_keys - set(s.keys())}")
+                continue
+            if not (isinstance(s["key_facts"], str) and isinstance(s["key_articles"], str)):
+                if stage == "infer":
+                    print(f"[infer] idx={s.get('idx', 'N/A')} key_facts 或 key_articles 不是字符串")
+                continue
+            filtered_samples.append(s)
+        self.samples = filtered_samples
         print(f"loading {stage} dataset, total samples:", len(self.samples))
-        if stage=="test":
+        if stage=="test" or stage=="infer":
             self.samples.sort(key=lambda x: x["idx"])
     def __len__(self):
         return len(self.samples)

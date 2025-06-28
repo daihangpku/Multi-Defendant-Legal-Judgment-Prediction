@@ -21,6 +21,22 @@ For training
 python scripts/subtask1/train.py
 ```
 For evaluation/inference
+
 ```bash
 python scripts/subtask1/inference.py --ckpt_path your/ckpt_path
+```
+
+### Subtask2
+For data preprocessing
+```bash
+python preprocess/subtask2/preprocess.py
+```
+For training
+```bash
+python scripts/subtask2/train.py
+```
+For evaluation/inference
+
+```bash
+python scripts/subtask2/inference.py --ckpt_path your/ckpt_path
 ```
